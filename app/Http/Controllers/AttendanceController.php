@@ -88,7 +88,7 @@ class AttendanceController extends Controller {
 	 */
 	public function store(Request $request) {
        
-   // return $request;
+   		// return $request;
 		for ($i = 0; $i < count($request->user_id); $i++) {
 			Attendance::create([
 				'created_by' => auth()->user()->id,
