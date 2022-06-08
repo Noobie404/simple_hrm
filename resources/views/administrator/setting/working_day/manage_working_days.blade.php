@@ -23,8 +23,10 @@
         <h3 class="box-title">{{ __('Manage working days') }}</h3>
 
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+            title="Collapse"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i
+              class="fa fa-times"></i></button>
         </div>
       </div>
       <form action="{{ url('/setting/working-days/update/')}}" method="post">
@@ -50,9 +52,11 @@
               @foreach($working_days as $working_day)
               <label class="checkbox-inline">
                 @if($working_day['working_status'] == 1)
-                <input type="hidden" name="day[]" value="1"><input checked type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value">
+                <input type="hidden" name="day[]" value="1"><input checked type="checkbox"
+                  onclick="this.previousSibling.value=1-this.previousSibling.value">
                 @else
-                <input type="hidden" name="day[]" value="0"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value">
+                <input type="hidden" name="day[]" value="0"><input type="checkbox"
+                  onclick="this.previousSibling.value=1-this.previousSibling.value">
                 @endif
                 <span>{{ $working_day['day'] }}</span>
               </label>
@@ -62,7 +66,8 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary btn-flat"><i class="icon fa fa-edit"></i> {{ __('Update') }}</button>
+          <button type="submit" class="btn btn-primary btn-flat"><i class="icon fa fa-edit"></i>
+            {{ __('Update') }}</button>
         </div>
       </form>
     </div>
