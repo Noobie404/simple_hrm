@@ -18,9 +18,9 @@
                 $setimes= \App\SetTime::all();
                 foreach($setimes as $time)
                 {
-                $id=$time->id;
-                $intime=$time->in_time;
-                $outtime=$time->out_time;
+                    $id=$time->id;
+                    $intime=$time->in_time;
+                    $outtime=$time->out_time;
                 }
                 
                 ?>
