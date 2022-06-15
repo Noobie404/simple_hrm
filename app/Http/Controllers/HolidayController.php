@@ -152,7 +152,6 @@ class HolidayController extends Controller {
 		$holidays->holiday_name = $request->get('holiday_name');
 		$holidays->date = $request->get('date');
 		$holidays->description = $request->get('description');
-		$holidays->description = $request->get('description');
 		$holidays->publication_status = $request->get('publication_status');
 		$affected_row = $holidays->save();
 

@@ -237,49 +237,34 @@ class AttendanceController extends Controller {
 
 
 
-    public function attDetailsReport(Request $request){
-
-    	//return $request->emp_id;
-
-
-	$empid= $request->emp_id;
-	$daterange= $request->daterange;
-
-
-
-	if($request->daterange=='' or $request->emp_id==0){
-	
-	return redirect('/hrm/attendance/details/report/go')->with('exception', 'Please select the Date Range');
-	}else{
-
+    public function attDetailsReport(Request $request)
+	{
 		$empid= $request->emp_id;
-	$dates = explode(' - ', $request->daterange);
+		$daterange= $request->daterange;
 
-	 $date1 = $dates[0];
-	 $date2 = $dates[1];
- 
-$startdate = date("Y-m-d", strtotime($date1));
-$enddate = date("Y-m-d", strtotime($date2));
+		if($request->daterange=='' or $request->emp_id==0){
+		
+			return redirect('/hrm/attendance/details/report/go')->with('exception', 'Please select the Date Range');
+		}else{
 
+			$empid= $request->emp_id;
+			$dates = explode(' - ', $request->daterange);
 
-	$attendance = DB::table('attendances')->whereBetween('attendance_date', [$startdate, $enddate])->where('user_id', $empid)->get();
-
-$attds=  DB::table('attendances')->where('attendance_status', 1)->where('user_id', $empid)->whereBetween('attendance_date', [$startdate, $enddate])->get();
-
-$abs=  DB::table('attendances')->where('attendance_status', 0)->where('user_id', $empid)->whereBetween('attendance_date', [$startdate, $enddate])->get();
-
-
-    	return view('administrator.hrm.attendance.detailsAttendenseReport', compact('attendance', 'startdate', 'enddate', 'empid', 'attds', 'abs'));
-    }
-}
+			$date1 = $dates[0];
+			$date2 = $dates[1];
+		
+			$startdate = date("Y-m-d", strtotime($date1));
+			$enddate = date("Y-m-d", strtotime($date2));
 
 
+				$attendance = DB::table('attendances')->whereBetween('attendance_date', [$startdate, $enddate])->where('user_id', $empid)->get();
 
+			$attds=  DB::table('attendances')->where('attendance_status', 1)->where('user_id', $empid)->whereBetween('attendance_date', [$startdate, $enddate])->get();
 
-
-
-
-
+			$abs=  DB::table('attendances')->where('attendance_status', 0)->where('user_id', $empid)->whereBetween('attendance_date', [$startdate, $enddate])->get();
+			return view('administrator.hrm.attendance.detailsAttendenseReport', compact('attendance', 'startdate', 'enddate', 'empid', 'attds', 'abs'));
+		}
+	}
 
 public function attDetailsReportPdf(Request $request){
 

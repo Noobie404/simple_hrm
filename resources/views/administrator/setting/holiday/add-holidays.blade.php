@@ -55,7 +55,8 @@
             <div class="col-md-6">
               <label for="holiday_name">{{ __('Event Name') }} <span class="text-danger">*</span></label>
               <div class="form-group{{ $errors->has('holiday_name') ? ' has-error' : '' }} has-feedback">
-                <input type="text" name="holiday_name" id="holiday_name" class="form-control" value="{{ old('holiday_name') }}" placeholder="{{ __('Enter event name..') }}">
+                <input type="text" name="holiday_name" id="holiday_name" class="form-control"
+                  value="{{ old('holiday_name') }}" placeholder="{{ __('Enter event name..') }}">
                 @if ($errors->has('holiday_name'))
                 <span class="help-block">
                   <strong>{{ $errors->first('holiday_name') }}</strong>
@@ -101,7 +102,8 @@
             <div class="col-md-12">
               <label for="description">{{ __('Event Description ') }}<span class="text-danger">*</span></label>
               <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }} has-feedback">
-                <textarea class="textarea text-description" name="description" id="description" placeholder="{{ __('Enter Holiday description..') }}">{{ old('description') }}</textarea>
+                <textarea class="textarea text-description" name="description" id="description"
+                  placeholder="{{ __('Enter Holiday description..') }}">{{ old('description') }}</textarea>
                 @if ($errors->has('description'))
                 <span class="help-block">
                   <strong>{{ $errors->first('description') }}</strong>
@@ -116,8 +118,10 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          <a href="{{ url('setting/holidays') }}" class="btn btn-danger btn-flat"><i class="icon fa fa-close"></i> {{ __('Cancel') }}</a>
-          <button type="submit" class="btn btn-primary btn-flat"><i class="icon fa fa-plus"></i> {{ __('Add Holiday List') }}</button>
+          <a href="{{ url('setting/holidays') }}" class="btn btn-danger btn-flat"><i class="icon fa fa-close"></i>
+            {{ __('Cancel') }}</a>
+          <button type="submit" class="btn btn-primary btn-flat"><i class="icon fa fa-plus"></i>
+            {{ __('Add Holiday List') }}</button>
         </div>
       </form>
     </div>
