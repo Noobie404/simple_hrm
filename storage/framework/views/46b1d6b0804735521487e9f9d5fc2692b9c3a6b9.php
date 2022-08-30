@@ -1,4 +1,4 @@
-<?php $__env->startSection('title', __('Manage Salary Details')); ?>
+<?php $__env->startSection('title', __('Manage Salary')); ?>
 
 <?php $__env->startSection('main_content'); ?>
 <div class="content-wrapper">
@@ -10,7 +10,7 @@
     <ol class="breadcrumb">
       <li><a href="<?php echo url('/dashboard'); ?>"><i class="fa fa-dashboard"></i><?php echo __('Dashboard'); ?> </a></li>
       <li><a><?php echo __('Payroll'); ?></a></li>
-      <li class="active"><?php echo __('Manage Salary Details'); ?></li>
+      <li class="active"><?php echo __('Manage Salary'); ?></li>
     </ol>
   </section>
 
@@ -21,7 +21,7 @@
         <!-- Default box -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title"><?php echo __('Manage Salary Details'); ?></h3>
+            <h3 class="box-title"><?php echo __('Manage Salary'); ?></h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -84,9 +84,11 @@
       </div>
       <!-- /.end.col -->
 
-      <form name="employee_salary_form" id="employee_salary_form" action="<?php echo url('/hrm/payroll/update/' . $salary['id']); ?>" method="post">
+      <form name="employee_salary_form" id="employee_salary_form" action="<?php echo url('/hrm/payroll/store'); ?>" method="post">
         <?php echo csrf_field(); ?>
 
+
+        <input type="hidden" name="user_id" value="<?php echo $employee_id; ?>">
 
         <div class="col-md-12">
           <div class="box box-info">
@@ -117,7 +119,7 @@
                 <div class="form-group<?php echo $errors->has('basic_salary') ? ' has-error' : ''; ?>">
                   <label for="basic_salary" class="col-sm-3 control-label"><?php echo __('Basic Salary'); ?></label>
                   <div class="col-sm-6">
-                    <input type="number" name="basic_salary" class="form-control" id="basic_salary" value="<?php echo $salary['basic_salary']; ?>" placeholder="<?php echo __('Enter basic salary..'); ?>">
+                    <input type="number" name="basic_salary" class="form-control" id="basic_salary" value="<?php echo old('basic_salary'); ?>" placeholder="<?php echo __('Enter basic salary..'); ?>">
                     <?php if($errors->has('basic_salary')): ?>
                     <span class="help-block">
                       <strong><?php echo $errors->first('basic_salary'); ?></strong>
@@ -140,7 +142,7 @@
             <div class="box-body">
               <div class="form-group<?php echo $errors->has('house_rent_allowance') ? ' has-error' : ''; ?>">
                 <label for="house_rent_allowance"><?php echo __('House Rent Allowance'); ?></label>
-                <input type="number" name="house_rent_allowance" value="<?php echo $salary['house_rent_allowance']; ?>" class="form-control" id="house_rent_allowance" placeholder="<?php echo __('Enter house rent allowance..'); ?>">
+                <input type="number" name="house_rent_allowance" value="<?php echo old('house_rent_allowance'); ?>" class="form-control" id="house_rent_allowance" placeholder="<?php echo __('Enter house rent allowance..'); ?>">
                 <?php if($errors->has('house_rent_allowance')): ?>
                 <span class="help-block">
                   <strong><?php echo $errors->first('house_rent_allowance'); ?></strong>
@@ -149,7 +151,7 @@
               </div>
               <div class="form-group<?php echo $errors->has('medical_allowance') ? ' has-error' : ''; ?>">
                 <label for="medical_allowance"><?php echo __('Medical Allowance'); ?></label>
-                <input type="number" name="medical_allowance" value="<?php echo $salary['medical_allowance']; ?>" class="form-control" id="medical_allowance" placeholder="<?php echo __('Enter medical allowance..'); ?>">
+                <input type="number" name="medical_allowance" value="<?php echo old('medical_allowance'); ?>" class="form-control" id="medical_allowance" placeholder="<?php echo __('Enter medical allowance..'); ?>">
                 <?php if($errors->has('medical_allowance')): ?>
                 <span class="help-block">
                   <strong><?php echo $errors->first('medical_allowance'); ?></strong>
@@ -158,7 +160,7 @@
               </div>
               <div class="form-group<?php echo $errors->has('special_allowance') ? ' has-error' : ''; ?>">
                 <label for="special_allowance"><?php echo __('Special Allowance'); ?></label>
-                <input type="number" name="special_allowance" value="<?php echo $salary['special_allowance']; ?>" class="form-control" id="special_allowance" placeholder="<?php echo __('Enter special allowance..'); ?>">
+                <input type="number" name="special_allowance" value="<?php echo old('special_allowance'); ?>" class="form-control" id="special_allowance" placeholder="<?php echo __('Enter special allowance..'); ?>">
                 <?php if($errors->has('special_allowance')): ?>
                 <span class="help-block">
                   <strong><?php echo $errors->first('special_allowance'); ?></strong>
@@ -167,7 +169,7 @@
               </div>
               <div class="form-group<?php echo $errors->has('provident_fund_contribution') ? ' has-error' : ''; ?>">
                 <label for="provident_fund_contribution"><?php echo __('Provident Fund Contribution'); ?></label>
-                <input type="number" name="provident_fund_contribution" value="<?php echo $salary['provident_fund_contribution']; ?>" class="form-control" id="provident_fund_contribution" placeholder="<?php echo __('Enter special allowance..'); ?>">
+                <input type="number" name="provident_fund_contribution" value="<?php echo old('provident_fund_contribution'); ?>" class="form-control" id="provident_fund_contribution" placeholder="<?php echo __('Enter provident fund contribution..'); ?>">
                 <?php if($errors->has('provident_fund_contribution')): ?>
                 <span class="help-block">
                   <strong><?php echo $errors->first('provident_fund_contribution'); ?></strong>
@@ -176,7 +178,7 @@
               </div>
               <div class="form-group<?php echo $errors->has('other_allowance') ? ' has-error' : ''; ?>">
                 <label for="other_allowance"><?php echo __('Other Allowance'); ?></label>
-                <input type="number" name="other_allowance" value="<?php echo $salary['other_allowance']; ?>" class="form-control" id="other_allowance" placeholder="<?php echo __('Enter other allowance..'); ?>">
+                <input type="number" name="other_allowance" value="<?php echo old('other_allowance'); ?>" class="form-control" id="other_allowance" placeholder="<?php echo __('Enter other allowance..'); ?>">
                 <?php if($errors->has('other_allowance')): ?>
                 <span class="help-block">
                   <strong><?php echo $errors->first('other_allowance'); ?></strong>
@@ -197,7 +199,7 @@
             <div class="box-body">
               <div class="form-group<?php echo $errors->has('tax_deduction') ? ' has-error' : ''; ?>">
                 <label for="tax_deduction"><?php echo __('Tax Deduction'); ?></label>
-                <input type="number" name="tax_deduction" value="<?php echo $salary['tax_deduction']; ?>" class="form-control" id="tax_deduction" placeholder="<?php echo __('Enter tax deduction..'); ?>">
+                <input type="number" name="tax_deduction" value="<?php echo old('tax_deduction'); ?>" class="form-control" id="tax_deduction" placeholder="<?php echo __('Enter tax deduction..'); ?>">
                 <?php if($errors->has('tax_deduction')): ?>
                 <span class="help-block">
                   <strong><?php echo $errors->first('tax_deduction'); ?></strong>
@@ -206,7 +208,7 @@
               </div>
               <div class="form-group<?php echo $errors->has('provident_fund_deduction') ? ' has-error' : ''; ?>">
                 <label for="provident_fund_deduction"><?php echo __('Provident Fund Deduction'); ?></label>
-                <input type="number" name="provident_fund_deduction" value="<?php echo $salary['provident_fund_deduction']; ?>" class="form-control" id="provident_fund_deduction" placeholder="<?php echo __('Enter tax deduction..'); ?>">
+                <input type="number" name="provident_fund_deduction" value="<?php echo old('provident_fund_deduction'); ?>" class="form-control" id="provident_fund_deduction" placeholder="<?php echo __('Enter provident fund deduction..'); ?>">
                 <?php if($errors->has('provident_fund_deduction')): ?>
                 <span class="help-block">
                   <strong><?php echo $errors->first('provident_fund_deduction'); ?></strong>
@@ -215,7 +217,7 @@
               </div>
               <div class="form-group<?php echo $errors->has('other_deduction') ? ' has-error' : ''; ?>">
                 <label for="other_deduction"><?php echo __('Other Deduction'); ?></label>
-                <input type="number" name="other_deduction" value="<?php echo $salary['other_deduction']; ?>" class="form-control" id="other_deduction" placeholder="<?php echo __('Enter other deduction..'); ?>">
+                <input type="number" name="other_deduction" value="<?php echo old('other_deduction'); ?>" class="form-control" id="other_deduction" placeholder="<?php echo __('Enter other deduction..'); ?>">
                 <?php if($errors->has('other_deduction')): ?>
                 <span class="help-block">
                   <strong><?php echo $errors->first('other_deduction'); ?></strong>
@@ -268,7 +270,7 @@
             <!-- /.box-body -->
 
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-flat pull-right"><i class="fa fa-edit"></i> <?php echo __('Update Details'); ?></button>
+              <button type="submit" class="btn btn-primary btn-flat pull-right"><i class="fa fa-save"></i> <?php echo __('Save Details'); ?></button>
             </div>
           </div>
         </div>
@@ -283,7 +285,10 @@
 <script type="text/javascript">
   // For Kepp Data After Reload
   document.forms['employee_select_form'].elements['user_id'].value = "<?php echo $employee_id; ?>";
-  document.forms['employee_salary_form'].elements['employee_type'].value = "<?php echo $salary['employee_type']; ?>";
+
+  <?php if(!empty(old('employee_type'))): ?>
+  document.forms['employee_salary_form'].elements['employee_type'].value = "<?php echo old('employee_type'); ?>";
+  <?php endif; ?>
 
   $(document).ready(function(){
     calculation();
@@ -302,7 +307,6 @@
     var medical_allowance = $("#medical_allowance").val();
     var special_allowance = $("#special_allowance").val();
     var provident_fund_contribution = $("#provident_fund_contribution").val();
-    var provident_fund = $("#provident_fund").val();
     var other_allowance = $("#other_allowance").val();
     var tax_deduction = $("#tax_deduction").val();
     var provident_fund_deduction = $("#provident_fund_deduction").val();

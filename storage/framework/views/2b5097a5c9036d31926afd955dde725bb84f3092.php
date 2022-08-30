@@ -3,15 +3,15 @@
     <a href="<?php echo url('/dashboard'); ?>" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><?php if(!empty(auth()->user()->avatar)): ?>
-                        <img src="<?php echo asset('public/profile_picture/'.auth()->user()->avatar); ?>" class="user-image" alt="User Image">
+                        <img src="<?php echo asset('profile_picture/'.auth()->user()->avatar); ?>" class="user-image" alt="User Image">
                         <?php else: ?>
-                        <img src="<?php echo asset('public/profile_picture/blank_profile_picture.png'); ?>" class="user-image" alt="User Image">
+                        <img src="<?php echo asset('profile_picture/blank_profile_picture.png'); ?>" class="user-image" alt="User Image">
                         <?php endif; ?></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><?php if(!empty(auth()->user()->avatar)): ?>
-                        <img src="<?php echo asset('public/profile_picture/'.auth()->user()->avatar); ?>" class="user-image" alt="User Image">
+                        <img src="<?php echo asset('profile_picture/'.auth()->user()->avatar); ?>" class="user-image" alt="User Image">
                         <?php else: ?>
-                        <img src="<?php echo asset('public/profile_picture/blank_profile_picture.png'); ?>" class="user-image" alt="User Image">
+                        <img src="<?php echo asset('profile_picture/blank_profile_picture.png'); ?>" class="user-image" alt="User Image">
                         <?php endif; ?></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
@@ -30,9 +30,9 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <?php if(!empty(auth()->user()->avatar)): ?>
-                        <img src="<?php echo asset('public/profile_picture/'.auth()->user()->avatar); ?>" class="user-image" alt="User Image">
+                        <img src="<?php echo asset('profile_picture/'.auth()->user()->avatar); ?>" class="user-image" alt="User Image">
                         <?php else: ?>
-                        <img src="<?php echo asset('public/profile_picture/blank_profile_picture.png'); ?>" class="user-image" alt="User Image">
+                        <img src="<?php echo asset('profile_picture/blank_profile_picture.png'); ?>" class="user-image" alt="User Image">
                         <?php endif; ?>
 
                         <span class="hidden-xs"><?php echo Auth::user()->name; ?></span>
@@ -41,9 +41,9 @@
                         <!-- User image -->
                         <li class="user-header">
                             <?php if(!empty(auth()->user()->avatar)): ?>
-                            <img src="<?php echo asset('public/profile_picture/'.auth()->user()->avatar); ?>" class="img-circle" alt="User Image">
+                            <img src="<?php echo asset('profile_picture/'.auth()->user()->avatar); ?>" class="img-circle" alt="User Image">
                             <?php else: ?>
-                            <img src="<?php echo asset('public/profile_picture/blank_profile_picture.png'); ?>"  class="img-circle" alt="User Image">
+                            <img src="<?php echo asset('profile_picture/blank_profile_picture.png'); ?>"  class="img-circle" alt="User Image">
                             <?php endif; ?>
                             <p>
                                 <?php echo Auth::user()->name; ?>

@@ -1,17 +1,17 @@
-<?php $__env->startSection('title', __('Employee')); ?>
+<?php $__env->startSection('title', __('Manage Increment')); ?>
 
 <?php $__env->startSection('main_content'); ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <?php echo __('Employee'); ?>
+          <?php echo __(' Manage Increment'); ?>
 
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo url('/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?php echo __('Dashboard'); ?></a></li>
-            <li><a><?php echo __('Employee'); ?></a></li>
-            <li class="active"><?php echo __('Employee'); ?></li>
+            <li><a><?php echo __('Increment'); ?></a></li>
+            <li class="active"><?php echo __('Manage Increment'); ?></li>
         </ol>
     </section>
 
@@ -20,24 +20,23 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"><?php echo __('Manage Employee'); ?></h3>
+                <h3 class="box-title"><?php echo __('Manage Increment'); ?></h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                     <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                 </div>
             </div>
             <div class="box-body">
                 <div  class="col-md-3">
-                <a href="<?php echo url('/people/employees/create'); ?>" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i><?php echo __(' Add'); ?> </a>
+                <a href="<?php echo url('/hrm/payroll/increment/search'); ?>" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> <?php echo __('add new increment'); ?></a>
             </div>
-            <div  class="col-md-3">
-              <button type="button" class="tip btn btn-primary btn-flat" title="Print" data-original-title="Label Printer" onclick="printDiv('printable_area')">
+                <div  class="col-md-3">
+                <button type="button" class="tip btn btn-primary btn-flat" title="Print" data-original-title="Label Printer" onclick="printDiv('printable_area')">
                     <i class="fa fa-print"></i>
                     <span class="hidden-sm hidden-xs"> <?php echo __('Print'); ?></span>
                 </button>
             </div>
-                
                 <div  class="col-md-6">
                     <input type="text" id="myInput" class="form-control" placeholder="<?php echo __('Search..'); ?>">
                 </div>
@@ -59,38 +58,46 @@
                     <?php endif; ?>
                 </div>
                 <!-- /.Notification Box -->
-        <div id="printable_area" class="col-md-12 table-responsive">
-               <table  class="table table-bordered table-striped">
+                <div id="printable_area" class="col-md-12 table-responsive">
+
+
+
+                <table  class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th><?php echo __(' SL#'); ?></th>
-                            <th><?php echo __(' ID'); ?></th>
-                            <th><?php echo __(' Name'); ?></th>
-                            <th><?php echo __(' Designation'); ?></th>
-                            <th><?php echo __(' Contact No'); ?></th>
-                            <th class="text-center"><?php echo __('Added'); ?></th>
-                            <th class="text-center"><?php echo __('Actions'); ?></th>
+                            <th><?php echo __('SL'); ?></th>
+                            <th><?php echo __('ID NO'); ?></th>
+                            <th><?php echo __('Created By'); ?></th>
+                            <th><?php echo __('Employee'); ?></th>
+                            <th><?php echo __('Increment Date'); ?></th>
+                            <th><?php echo __('Increment Amount'); ?> </th>
+                            <th><?php echo __('Increment Purpose'); ?></th>
                         </tr>
                     </thead>
                     <tbody id="myTable">
-                        <?php $sl = 1; ?>
-                        <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php ($sl = 1); ?>
+                        <?php $__currentLoopData = $increments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $increment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><?php echo $sl++; ?></td>
-                            <td><?php echo $employee['employee_id']; ?></td>
-                            <td><?php echo $employee['name']; ?></td>
-                            <td><?php echo $employee['designation']; ?></td>
-                            <td><?php echo $employee['contact_no_one']; ?></td>
-                            <td class="text-center"><?php echo date("d F Y", strtotime($employee['created_at'])); ?></td>
+                            <td><?php echo $sl ++; ?></td>
+                            <td>INCR<?php echo $increment->id; ?></td>
+                            <td><?php echo Auth::user()->name; ?></td>
+                            <?php $empname= \App\User::find($increment->emp_id)->name;?>
+                            <td><?php echo $empname; ?></td>
+                            <td><?php echo date("d F Y", strtotime($increment->date)); ?></td>
+                            <td><?php echo $increment->amount; ?></td>
+                            <td><?php echo $increment->incr_purpose; ?></td>
                            
-                            <td class="text-center">
-                               <a href="<?php echo url('/people/employees/edit/' . $employee['id']); ?>"><i class="icon fa fa-edit"></i> <?php echo __('Edit'); ?></a>
-                            </td>
+
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                     </tbody>
                 </table>
-            </div>
+
+  
+
+
+            </div><!--printable-->
             </div>
             <!-- /.box-body -->
         </div>
@@ -98,5 +105,9 @@
     </section>
     <!-- /.content -->
 </div>
+
+
+
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('administrator.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

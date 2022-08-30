@@ -5,7 +5,8 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-     <?php echo __('GENERATE PAYSLIP'); ?> 
+      <?php echo __('GENERATE PAYSLIP'); ?>
+
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?php echo url('/dashboard'); ?>"><i class="fa fa-dashboard"></i><?php echo __('Dashboard'); ?> </a></li>
@@ -24,8 +25,10 @@
             <h3 class="box-title"><?php echo __('Manage Salary Payment'); ?></h3>
 
             <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                title="Collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
+                title="Remove"><i class="fa fa-times"></i></button>
             </div>
           </div>
           <div class="box-body">
@@ -57,7 +60,8 @@
                   <div class="col-sm-6">
                     <div class="input-group date">
                       <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                      <input type="text" name="salary_month" id="monthpicker2" class="form-control pull-right" value="<?php echo $salary_month; ?>">
+                      <input type="text" name="salary_month" id="monthpicker2" class="form-control pull-right"
+                        value="<?php echo $salary_month; ?>">
                       <?php if($errors->has('salary_month')): ?>
                       <span class="help-block">
                         <strong><?php echo $errors->first('salary_month'); ?></strong>
@@ -69,7 +73,8 @@
                 <!-- /.end group -->
                 <div class="form-group">
                   <div class="col-sm-offset-3 col-sm-10">
-                    <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-arrow-right"></i> <?php echo __('GO'); ?></button>
+                    <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-arrow-right"></i>
+                      <?php echo __('GO'); ?></button>
                   </div>
                 </div>
                 <!-- /.end group -->
@@ -95,86 +100,97 @@
             <!-- Notification Box -->
             <div class="col-md-12">
               <table class="table table-bordered">
-               <tr class="bg-info">
-                <th><?php echo __('sl#'); ?></th>
-                <th><?php echo __('Employee Name'); ?></th>
-                <th><?php echo __('Designation'); ?></th>
-                <th><?php echo __('Salary Month'); ?></th>
-                <th><?php echo __('Gross Salary'); ?></th>
-                <th><?php echo __('Total Deduction'); ?></th>
-                <th><?php echo __('Net Salary'); ?></th>
-                <th><?php echo __('Provident Fund'); ?></th>
-                <th><?php echo __('Payment Status'); ?></th>
-              </tr>
-              <?php ($sl = 1); ?>
-              <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-              <tr>
-                <td><?php echo $sl++; ?></td>
-                <td><?php echo $employee['name']; ?></td>
-                <td><?php echo $employee['designation']; ?></td>
-                <td><?php echo date("F Y", strtotime($salary_month)); ?></td>
-                <?php ($debits = 0); ?>
-                <?php ($credits = 0); ?>
+                <tr class="bg-info">
+                  <th><?php echo __('sl#'); ?></th>
+                  <th><?php echo __('Employee Name'); ?></th>
+                  <th><?php echo __('Designation'); ?></th>
+                  <th><?php echo __('Salary Month'); ?></th>
+                  <th><?php echo __('Gross Salary'); ?></th>
+                  <th><?php echo __('Total Deduction'); ?></th>
+                  <th><?php echo __('Net Salary'); ?></th>
+                  <th><?php echo __('Provident Fund'); ?></th>
+                  <th><?php echo __('Payment Status'); ?></th>
+                </tr>
+                <?php ($sl = 1); ?>
+                <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <tr>
+                  <td><?php echo $sl++; ?></td>
+                  <td><?php echo $employee['name']; ?></td>
+                  <td><?php echo $employee['designation']; ?></td>
+                  <td><?php echo date("F Y", strtotime($salary_month)); ?></td>
+                  <?php ($debits = 0); ?>
+                  <?php ($credits = 0); ?>
 
-                <?php ($credits += ($employee['basic_salary'] + $employee['house_rent_allowance'] + $employee['medical_allowance'] + $employee['special_allowance'] + $employee['other_allowance'])); ?>
-                <?php ($debits += $employee['tax_deduction'] + $employee['provident_fund_deduction'] + $employee['other_deduction']); ?>
+                  <?php ($credits += ($employee['basic_salary'] + $employee['house_rent_allowance'] +
+                  $employee['medical_allowance'] + $employee['special_allowance'] + $employee['other_allowance'])); ?>
+                  <?php ($debits += $employee['tax_deduction'] + $employee['provident_fund_deduction'] +
+                  $employee['other_deduction']); ?>
 
-                <?php $__currentLoopData = $bonuses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bonus): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($employee['user_id'] == $bonus['user_id']): ?>
-                <?php ($credits += $bonus['bonus_amount']); ?>
-                <?php endif; ?>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  <?php $__currentLoopData = $bonuses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bonus): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  <?php if($employee['user_id'] == $bonus['user_id']): ?>
+                  <?php ($credits += $bonus['bonus_amount']); ?>
+                  <?php endif; ?>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                <?php $__currentLoopData = $deductions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $deduction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($employee['user_id'] == $deduction['user_id']): ?>
-                <?php ($debits += $deduction['deduction_amount']); ?>
-                <?php endif; ?>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  <?php $__currentLoopData = $deductions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $deduction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  <?php if($employee['user_id'] == $deduction['user_id']): ?>
+                  <?php ($debits += $deduction['deduction_amount']); ?>
+                  <?php endif; ?>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                <?php $__currentLoopData = $loans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $loan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($employee['user_id'] == $loan['user_id']): ?>
-                <?php ($installment = $loan['loan_amount'] / $loan['remaining_installments']); ?>
-                <?php ($debits += $installment); ?>
-                <?php endif; ?>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  <?php $__currentLoopData = $loans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $loan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  <?php if($employee['user_id'] == $loan['user_id']): ?>
+                  <?php ($installment = $loan['loan_amount'] / $loan['remaining_installments']); ?>
+                  <?php ($debits += $installment); ?>
+                  <?php endif; ?>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                <td><?php echo number_format($credits, 2, '.', ','); ?></td>
-                <td><?php echo number_format($debits, 2, '.', ','); ?></td>
-                <td><?php echo number_format($credits - $debits, 2, '.', ','); ?></td>
-                <td><?php echo number_format($employee['provident_fund_contribution'] + $employee['provident_fund_deduction'], 2, '.', ','); ?></td>
+                  <td><?php echo number_format($credits, 2, '.', ','); ?></td>
+                  <td><?php echo number_format($debits, 2, '.', ','); ?></td>
+                  <td><?php echo number_format($credits - $debits, 2, '.', ','); ?></td>
+                  <td>
+                    <?php echo number_format($employee['provident_fund_contribution'] + $employee['provident_fund_deduction'], 2, '.', ','); ?>
 
-                <td>
-                  <?php if(!empty($salary_payments)): ?>
+                  </td>
+
+                  <td>
+                    <?php if(!empty($salary_payments)): ?>
                     <?php ($status = 0); ?>
                     <?php $__currentLoopData = $salary_payments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $salary_payment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <?php if($salary_payment['user_id'] == $employee['user_id']): ?>
-                        <?php ($status = 1); ?>
-                      <?php endif; ?>
+                    <?php if($salary_payment['user_id'] == $employee['user_id']): ?>
+                    <?php ($status = 1); ?>
+                    <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <?php if($status == 1): ?>
-                      <p class="text-success"><?php echo __('Paid'); ?></p>
+                    <p class="text-success"><?php echo __('Paid'); ?></p>
                     <?php else: ?>
-                      <a href="<?php echo url('hrm/salary-payments/manage-salary/' . $employee['user_id'] . '/' . $salary_month); ?>"><p class="text-danger"><?php echo __('Make payment'); ?></p></a>
+                    <a
+                      href="<?php echo url('hrm/salary-payments/manage-salary/' . $employee['user_id'] . '/' . $salary_month); ?>">
+                      <p class="text-danger"><?php echo __('Make payment'); ?></p>
+                    </a>
                     <?php endif; ?>
-                  <?php else: ?>
-                    <a href="<?php echo url('hrm/salary-payments/manage-salary/' . $employee['user_id'] . '/' . $salary_month); ?>"><p class="text-danger"><?php echo __('Make payment'); ?></p></a>
-                  <?php endif; ?>
-                </td>
-              </tr>
-              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </table>
+                    <?php else: ?>
+                    <a
+                      href="<?php echo url('hrm/salary-payments/manage-salary/' . $employee['user_id'] . '/' . $salary_month); ?>">
+                      <p class="text-danger"><?php echo __('Make payment'); ?></p>
+                    </a>
+                    <?php endif; ?>
+                  </td>
+                </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+              </table>
+            </div>
+            <!-- /. end col -->
           </div>
-          <!-- /. end col -->
+          <!-- /.box-body -->
         </div>
-        <!-- /.box-body -->
+        <!-- /.box -->
       </div>
-      <!-- /.box -->
+      <!-- /.end.col -->
     </div>
-    <!-- /.end.col -->
-  </div>
-  <!-- /.end.row -->
-</section>
-<!-- /.content -->
+    <!-- /.end.row -->
+  </section>
+  <!-- /.content -->
 </div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('administrator.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

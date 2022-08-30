@@ -1,16 +1,16 @@
-<?php $__env->startSection('title', __('Salary List')); ?>
+<?php $__env->startSection('title', __('Manage Credit')); ?>
 
 <?php $__env->startSection('main_content'); ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-           <?php echo __('PAYROLL'); ?> 
+           <?php echo __('Credit/Loan'); ?> 
         </h1>
         <ol class="breadcrumb">
-            <li><a href="<?php echo url('/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?php echo __('Dashboard'); ?></a></li>
-            <li><a><?php echo __('Payroll'); ?></a></li>
-            <li class="active"><?php echo __('Salary List'); ?></li>
+            <li><a href="<?php echo url('/dashboard'); ?>"><i class="fa fa-dashboard"></i><?php echo __('Dashboard'); ?> </a></li>
+            <li><a><?php echo __('Credit'); ?></a></li>
+            <li class="active"><?php echo __('Manage Credit'); ?></li>
         </ol>
     </section>
 
@@ -19,7 +19,7 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"><?php echo __('Salary List'); ?></h3>
+                <h3 class="box-title"><?php echo __('Manage Credit'); ?></h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -28,7 +28,7 @@
             </div>
             <div class="box-body">
                 <div  class="col-md-6">
-                    <a href="<?php echo url('/hrm/payroll'); ?>" class="btn btn-primary btn-flat"><i class="fa fa-edit"></i> <?php echo __('Manage Salary'); ?></a>
+                    <a href="<?php echo url('/hrm/loans/create'); ?>" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i><?php echo __(' Add loan'); ?></a>
                 </div>
                 
                 <div  class="col-md-6">
@@ -51,59 +51,35 @@
                     <?php endif; ?>
                 </div>
                 <!-- /.Notification Box -->
-                <div class="col-md-12 table-responsive">
+                <div  class="col-md-12 table-responsive">
                     <table  class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th><?php echo __('SL#'); ?></th>
                                 <th><?php echo __('Employee Name'); ?></th>
                                 <th><?php echo __('Designation'); ?></th>
-                                <th><?php echo __('Employee Type'); ?></th>
-                                <th><?php echo __('Gross Salary'); ?></th>
-                                <th><?php echo __('Deductions'); ?></th>
-                                <th><?php echo __('Net Salary'); ?></th>
-                                <th class="text-center"><?php echo __('Updated At'); ?></th>
+                                <th><?php echo __('Loan Name'); ?></th>
+                                <th><?php echo __('Loan Amount'); ?></th>
+                                <th><?php echo __('Number of Inst.'); ?></th>
+                                <th><?php echo __('Remaining Inst.'); ?></th>
+                                <th><?php echo __('Date Added'); ?></th>
                                 <th class="text-center"><?php echo __('Actions'); ?></th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
                             <?php ($sl = 1); ?>
-                            <?php $__currentLoopData = $salaries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $salary): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $loans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $loan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><?php echo $sl++; ?></td>
-                                <td><?php echo $salary['name']; ?></td>
-                                <td><?php echo $salary['designation']; ?></td>
-                                <td>
-                                    <?php if($salary['employee_type'] == 1): ?>
-                                   <?php echo __('Provision'); ?> 
-                                    <?php elseif($salary['employee_type'] == 2): ?>
-                                    <?php echo __('Permanent'); ?>
-
-                                    <?php elseif($salary['employee_type'] == 3): ?>
-                                    <?php echo __('Full Time'); ?>
-
-                                    <?php elseif($salary['employee_type'] == 4): ?>
-                                   <?php echo __('Part Time'); ?> 
-                                    <?php else: ?>
-                                    <?php echo __('Adhoc'); ?>
-
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                <?php ($gross_salary = $salary['basic_salary'] + $salary['house_rent_allowance'] + $salary['medical_allowance'] + $salary['special_allowance'] + $salary['other_allowance']); ?>
-                                <?php echo $gross_salary; ?>
-
-                                </td>
-                                <td>
-                                <?php ($total_deduction = $salary['tax_deduction'] + $salary['provident_fund_deduction'] + $salary['other_deduction']); ?>
-                                <?php echo $total_deduction; ?>
-
-                                </td>
-                                <td><?php echo $gross_salary - $total_deduction; ?></td>
-
-                                <td class="text-center"><?php echo date("d F Y", strtotime($salary['updated_at'])); ?></td>
+                                <td><?php echo $loan['name']; ?></td>
+                                <td><?php echo $loan['designation']; ?></td>
+                                <td><?php echo $loan['loan_name']; ?></td>
+                                <td><?php echo $loan['loan_amount']; ?></td>
+                                <td><?php echo $loan['number_of_installments']; ?></td>
+                                <td><?php echo $loan['remaining_installments']; ?></td>
+                                <td><?php echo date("d F Y", strtotime($loan['created_at'])); ?></td>
                                 <td class="text-center">
-                                    <a href="<?php echo url('/hrm/payroll/manage-salary/' . $salary['user_id']); ?>"><i class="icon fa fa-edit"></i> <?php echo __('Edit'); ?></a>
+                                   <a href="<?php echo url('/hrm/loans/edit/' . $loan['id']); ?>"><i class="icon fa fa-edit"></i> <?php echo __('Edit'); ?></a>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

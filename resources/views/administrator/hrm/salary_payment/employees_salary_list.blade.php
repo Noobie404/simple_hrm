@@ -6,7 +6,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-     {{ __('GENERATE PAYSLIP') }} 
+      {{ __('GENERATE PAYSLIP') }}
     </h1>
     <ol class="breadcrumb">
       <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i>{{ __('Dashboard') }} </a></li>
@@ -25,8 +25,10 @@
             <h3 class="box-title">{{ __('Manage Salary Payment') }}</h3>
 
             <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                title="Collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
+                title="Remove"><i class="fa fa-times"></i></button>
             </div>
           </div>
           <div class="box-body">
@@ -55,7 +57,8 @@
                   <div class="col-sm-6">
                     <div class="input-group date">
                       <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                      <input type="text" name="salary_month" id="monthpicker2" class="form-control pull-right" value="{{ $salary_month }}">
+                      <input type="text" name="salary_month" id="monthpicker2" class="form-control pull-right"
+                        value="{{ $salary_month }}">
                       @if ($errors->has('salary_month'))
                       <span class="help-block">
                         <strong>{{ $errors->first('salary_month') }}</strong>
@@ -67,7 +70,8 @@
                 <!-- /.end group -->
                 <div class="form-group">
                   <div class="col-sm-offset-3 col-sm-10">
-                    <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-arrow-right"></i> {{ __('GO') }}</button>
+                    <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-arrow-right"></i>
+                      {{ __('GO') }}</button>
                   </div>
                 </div>
                 <!-- /.end group -->
@@ -93,85 +97,95 @@
             <!-- Notification Box -->
             <div class="col-md-12">
               <table class="table table-bordered">
-               <tr class="bg-info">
-                <th>{{ __('sl#') }}</th>
-                <th>{{ __('Employee Name') }}</th>
-                <th>{{ __('Designation') }}</th>
-                <th>{{ __('Salary Month') }}</th>
-                <th>{{ __('Gross Salary') }}</th>
-                <th>{{ __('Total Deduction') }}</th>
-                <th>{{ __('Net Salary') }}</th>
-                <th>{{ __('Provident Fund') }}</th>
-                <th>{{ __('Payment Status') }}</th>
-              </tr>
-              @php($sl = 1)
-              @foreach($employees as $employee)
-              <tr>
-                <td>{{ $sl++ }}</td>
-                <td>{{ $employee['name'] }}</td>
-                <td>{{ $employee['designation'] }}</td>
-                <td>{{ date("F Y", strtotime($salary_month)) }}</td>
-                @php($debits = 0)
-                @php($credits = 0)
+                <tr class="bg-info">
+                  <th>{{ __('sl#') }}</th>
+                  <th>{{ __('Employee Name') }}</th>
+                  <th>{{ __('Designation') }}</th>
+                  <th>{{ __('Salary Month') }}</th>
+                  <th>{{ __('Gross Salary') }}</th>
+                  <th>{{ __('Total Deduction') }}</th>
+                  <th>{{ __('Net Salary') }}</th>
+                  <th>{{ __('Provident Fund') }}</th>
+                  <th>{{ __('Payment Status') }}</th>
+                </tr>
+                @php($sl = 1)
+                @foreach($employees as $employee)
+                <tr>
+                  <td>{{ $sl++ }}</td>
+                  <td>{{ $employee['name'] }}</td>
+                  <td>{{ $employee['designation'] }}</td>
+                  <td>{{ date("F Y", strtotime($salary_month)) }}</td>
+                  @php($debits = 0)
+                  @php($credits = 0)
 
-                @php($credits += ($employee['basic_salary'] + $employee['house_rent_allowance'] + $employee['medical_allowance'] + $employee['special_allowance'] + $employee['other_allowance']))
-                @php($debits += $employee['tax_deduction'] + $employee['provident_fund_deduction'] + $employee['other_deduction'])
+                  @php($credits += ($employee['basic_salary'] + $employee['house_rent_allowance'] +
+                  $employee['medical_allowance'] + $employee['special_allowance'] + $employee['other_allowance']))
+                  @php($debits += $employee['tax_deduction'] + $employee['provident_fund_deduction'] +
+                  $employee['other_deduction'])
 
-                @foreach($bonuses as $bonus)
-                @if($employee['user_id'] == $bonus['user_id'])
-                @php($credits += $bonus['bonus_amount'])
-                @endif
-                @endforeach
+                  @foreach($bonuses as $bonus)
+                  @if($employee['user_id'] == $bonus['user_id'])
+                  @php($credits += $bonus['bonus_amount'])
+                  @endif
+                  @endforeach
 
-                @foreach($deductions as $deduction)
-                @if($employee['user_id'] == $deduction['user_id'])
-                @php($debits += $deduction['deduction_amount'])
-                @endif
-                @endforeach
+                  @foreach($deductions as $deduction)
+                  @if($employee['user_id'] == $deduction['user_id'])
+                  @php($debits += $deduction['deduction_amount'])
+                  @endif
+                  @endforeach
 
-                @foreach($loans as $loan)
-                @if($employee['user_id'] == $loan['user_id'])
-                @php($installment = $loan['loan_amount'] / $loan['remaining_installments'])
-                @php($debits += $installment)
-                @endif
-                @endforeach
+                  @foreach($loans as $loan)
+                  @if($employee['user_id'] == $loan['user_id'])
+                  @php($installment = $loan['loan_amount'] / $loan['remaining_installments'])
+                  @php($debits += $installment)
+                  @endif
+                  @endforeach
 
-                <td>{{ number_format($credits, 2, '.', ',') }}</td>
-                <td>{{ number_format($debits, 2, '.', ',') }}</td>
-                <td>{{ number_format($credits - $debits, 2, '.', ',') }}</td>
-                <td>{{ number_format($employee['provident_fund_contribution'] + $employee['provident_fund_deduction'], 2, '.', ',') }}</td>
+                  <td>{{ number_format($credits, 2, '.', ',') }}</td>
+                  <td>{{ number_format($debits, 2, '.', ',') }}</td>
+                  <td>{{ number_format($credits - $debits, 2, '.', ',') }}</td>
+                  <td>
+                    {{ number_format($employee['provident_fund_contribution'] + $employee['provident_fund_deduction'], 2, '.', ',') }}
+                  </td>
 
-                <td>
-                  @if(!empty($salary_payments))
+                  <td>
+                    @if(!empty($salary_payments))
                     @php($status = 0)
                     @foreach($salary_payments as $salary_payment)
-                      @if($salary_payment['user_id'] == $employee['user_id'])
-                        @php($status = 1)
-                      @endif
+                    @if($salary_payment['user_id'] == $employee['user_id'])
+                    @php($status = 1)
+                    @endif
                     @endforeach
                     @if($status == 1)
-                      <p class="text-success">{{ __('Paid') }}</p>
+                    <p class="text-success">{{ __('Paid') }}</p>
                     @else
-                      <a href="{{ url('hrm/salary-payments/manage-salary/' . $employee['user_id'] . '/' . $salary_month) }}"><p class="text-danger">{{ __('Make payment') }}</p></a>
+                    <a
+                      href="{{ url('hrm/salary-payments/manage-salary/' . $employee['user_id'] . '/' . $salary_month) }}">
+                      <p class="text-danger">{{ __('Make payment') }}</p>
+                    </a>
                     @endif
-                  @else
-                    <a href="{{ url('hrm/salary-payments/manage-salary/' . $employee['user_id'] . '/' . $salary_month) }}"><p class="text-danger">{{ __('Make payment') }}</p></a>
-                  @endif
-                </td>
-              </tr>
-              @endforeach
-            </table>
+                    @else
+                    <a
+                      href="{{ url('hrm/salary-payments/manage-salary/' . $employee['user_id'] . '/' . $salary_month) }}">
+                      <p class="text-danger">{{ __('Make payment') }}</p>
+                    </a>
+                    @endif
+                  </td>
+                </tr>
+                @endforeach
+              </table>
+            </div>
+            <!-- /. end col -->
           </div>
-          <!-- /. end col -->
+          <!-- /.box-body -->
         </div>
-        <!-- /.box-body -->
+        <!-- /.box -->
       </div>
-      <!-- /.box -->
+      <!-- /.end.col -->
     </div>
-    <!-- /.end.col -->
-  </div>
-  <!-- /.end.row -->
-</section>
-<!-- /.content -->
+    <!-- /.end.row -->
+  </section>
+  <!-- /.content -->
 </div>
 @endsection

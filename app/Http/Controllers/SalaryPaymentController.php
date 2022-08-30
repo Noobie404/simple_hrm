@@ -299,7 +299,7 @@ class SalaryPaymentController extends Controller {
 		->toarray();
 
 			return view('administrator.hrm.salary_payment.employees_salary_list', compact('employees', 'salary_month', 'bonuses', 'deductions', 'loans', 'salary_payments'));
-		}
+	}
 
 	/**
 	 * Display the specified resource.

@@ -1,16 +1,16 @@
-<?php $__env->startSection('title', __('Manage Deductiones')); ?>
+<?php $__env->startSection('title', __('References')); ?>
 
 <?php $__env->startSection('main_content'); ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-           <?php echo __('DEDUCTION'); ?> 
+           <?php echo __('REFERENCES'); ?> 
         </h1>
         <ol class="breadcrumb">
-            <li><a href="<?php echo url('/dashboard'); ?>"><i class="fa fa-dashboard"></i><?php echo __(' Dashboard'); ?> </a></li>
-            <li><a><?php echo __('Deduction'); ?></a></li>
-            <li class="active"><?php echo __('Manage Deductiones'); ?></li>
+            <li><a href="<?php echo url('/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?php echo __('Dashboard'); ?></a></li>
+            <li><a><?php echo __('People'); ?></a></li>
+            <li class="active"><?php echo __('References'); ?></li>
         </ol>
     </section>
 
@@ -19,22 +19,29 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"><?php echo __('Manage Deductiones'); ?></h3>
+                <h3 class="box-title"><?php echo __('Manage references'); ?></h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
                 </div>
             </div>
             <div class="box-body">
+                <div  class="col-md-3">
+                    <button type="button" class="tip btn btn-primary btn-flat" title="Print" data-original-title="Label Printer" onclick="printDiv('printable_area')">
+                    <i class="fa fa-print"></i>
+                    <span class="hidden-sm hidden-xs"> <?php echo __('Print'); ?></span>
+                </button>
+                </div>
                 
-                <div class="col-md-6">
-                    <a href="<?php echo url('/hrm/deductions/create'); ?>" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> <?php echo __('Add deduction'); ?></a>
+                <div  class="col-md-3">
+                    <a href="<?php echo url('/people/references/create'); ?>" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> <?php echo __('Add reference'); ?></a>
                 </div>
                 <div  class="col-md-6">
                     <input type="text" id="myInput" class="form-control" placeholder="<?php echo __('Search..'); ?>">
                 </div>
-
+          
+                <hr>
                 <!-- Notification Box -->
                 <div class="col-md-12">
                     <?php if(!empty(Session::get('message'))): ?>
@@ -52,33 +59,30 @@
                     <?php endif; ?>
                 </div>
                 <!-- /.Notification Box -->
-                <div class="col-md-12 table-responsive">
+                <div id="printable_area" class="col-md-12 table-responsive">
                     <table  class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th><?php echo __('SL#'); ?></th>
-                                <th><?php echo __('Employee Name'); ?></th>
-                                <th><?php echo __('Designation'); ?></th>
-                                <th><?php echo __('Deduction Name'); ?></th>
-                                <th><?php echo __('Deduction Month'); ?></th>
-                                <th><?php echo __('Deduction Amount'); ?></th>
-                                <th><?php echo __('Date Added'); ?></th>
+                                <th><?php echo __('Reference Name'); ?></th>
+                                <th><?php echo __('Address'); ?></th>
+                                <th><?php echo __('Contact No'); ?></th>
+                                <th class="text-center"><?php echo __('Added'); ?></th>
                                 <th class="text-center"><?php echo __('Actions'); ?></th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            <?php ($sl = 1); ?>
-                            <?php $__currentLoopData = $deductions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $deduction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $sl = 1; ?>
+                            <?php $__currentLoopData = $references; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><?php echo $sl++; ?></td>
-                                <td><?php echo $deduction['name']; ?></td>
-                                <td><?php echo $deduction['designation']; ?></td>
-                                <td><?php echo $deduction['deduction_name']; ?></td>
-                                <td><?php echo date("F Y", strtotime($deduction['deduction_month'])); ?></td>
-                                <td><?php echo $deduction['deduction_amount']; ?></td>
-                                <td><?php echo date("d F Y", strtotime($deduction['created_at'])); ?></td>
+                                <td><?php echo $reference['name']; ?></td>
+                                <td><?php echo $reference['present_address']; ?></td>
+                                <td><?php echo $reference['contact_no_one']; ?></td>
+                                <td class="text-center"><?php echo date("d F Y", strtotime($reference['created_at'])); ?></td>
+                                
                                 <td class="text-center">
-                                <a href="<?php echo url('/hrm/deductions/edit/' . $deduction['id']); ?>"><i class="icon fa fa-edit"></i> <?php echo __('Edit'); ?></a>
+                                   <a href="<?php echo url('/people/references/edit/' . $reference['id']); ?>"><i class="icon fa fa-edit"></i> <?php echo __('Edit'); ?></a>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
